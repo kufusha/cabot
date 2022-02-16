@@ -4,8 +4,8 @@ CaBot utilizes docker containers to run and manage various kinds of packages.
 
 ## Files
 
-- the containers will mount the home directory (see docker-compose files).
-- `../tools/setup-thirdparty-repos.sh`  will import third party packages into mostly under workspaces or docker contexts
+- home directory will be mounted by the containers (see docker-compose files).
+- `../tools/setup-thirdparty-repos.sh`  will import thirdparty packages into mostly under workspaces or docker contexts
 
 ```
 - home/
@@ -31,18 +31,18 @@ There are docker image context directory for the following five images
 
 |Image       |From                           |Additional Layers |ROS functions|
 |------------|-------------------------------|------------------|-----------|
-|ros1        |focal-noetic-base-mesa         |ROS1 noetic       |UI, BLE, device controller|
-|ros2        |focal-galactic-desktop-nav2-mesa|debug tools       |Nav2       |
-|people      |focal-cuda11.1-cudnn8-devel-noetic-base|OpenCV, Open3D, Realsense|people detection and tracking, queue detector|
-|people-nuc  |focal-noetic-base-mesa         |dependencies      |queue detector, people tracking|
-|localization|focal-noetic-base-mesa         |Cartographer dependency|localization, RF signal scan|
-|bridge      |focal-galactic-desktop-nav2-mesa|ROS1 noetic|ROS1-2 bridge|
+|ros1        |ubuntu:focal                   |ROS1 noetic       |UI, BLE, device controller|
+|ros2        |galactic-ros-desktop-nav2-focal|debug tools       |Nav2       |
+|people      |nvidia-cuda11.1-cudnn8-devel-ubuntu20.04-ros-base|OpenCV, Open3D, Realsense|people detection and tracking, queue detector|
+|people-nuc  |ros:noetic-ros-base-focal      |dependencies      |queue detector, people tracking|
+|localization|nvidia-cuda11.1-cudnn8-devel-ubuntu20.04-ros-base|Cartographer dependency|localization, RF signal scan|
+|bridge      |ros2|ROS1 noetic|ROS1-2 bridge|
 
 ### Utility Images
 |Image       |From                           |Additional Layers |ROS functions|
 |------------|-------------------------------|------------------|-----------|
 |topic_checker|localization|N/A|utility|
-|ble_scan/wifi_scan|focal-noetic-base-mesa|dependency|Bluetooth/Wi-Fi scanning|
+|ble_scan/wifi_scan|localization|dependency|Bluetooth/Wi-Fi scanning|
 
 ### Image for Jetson
 
@@ -50,22 +50,18 @@ people context has a Dockerfile for jeston named `Dockerfile.jetson`
 
 ### Image for NUC
 
-People context has a Dockerfile for PC without NVIDIA GPU named `Dockerfile.nuc`, which runs people/queue packages excluding people detection.
+people context has a Dockerfile for PC without nvidia GPU named `Dockerfile.nuc`, which is for running people/queue packages excluding people detection.
 
 ## Prebuild Docker Images
 
-In prebuild directory, there are some docker image contexts for base images for main images.
+In prebuild directory, there are some docker image context for base images for main images.
 
 |Image|From|Additional Layers|
 |---|---|---|
-|focal-noetic-base-mesa|focal-noetic-base|Mesa utils|
-|focal-noetic-base|focal-noetic|ROS1 noetic base|
-|focal-noetic|ubuntu:focal|ROS1 noetic core|
-|focal-galactic-desktop-nav2-mesa|focal-galactic-desktop-nav2|Mesa utils|
-|focal-galactic-desktop-nav2|focal-galactic-desktop|Navigation 2|
-|focal-galactic-desktop|ros:galactic|ROS2 galactic desktop|
-|focal-cuda11.1-cudnn8-devel-noetic-base|focal-cuda11.1-cudnn8-devel-noetic|ROS1 noetic base|
-|focal-cuda11.1-cudnn8-devel-noetic|nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04|ROS1 noetic core|
+|galactic-ros-desktop-nav2-focal|galactic-ros-dektop-focal|Navigation 2|
+|galactic-ros-desktop-focal|ros:galactic|ROS2 galactic desktop|
+|nvidia-cuda11.1-cudnn8-devel-ubuntu20.04-ros-base|nvidia-cuda11.1-cudnn8-devel-ubuntu20.04-ros-core|ROS1 noetic base|
+|nvidia-cuda11.1-cudnn8-devel-ubuntu20.04-ros-core|nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04|ROS1 noetic core|
 |nvidia/cuda:11.1-cudnn8-devel-ubuntu20.04|dockerhub||
 |ros:galactic|dockerhub||
 |ubuntu:focal|dockerhub||

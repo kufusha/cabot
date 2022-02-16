@@ -157,7 +157,7 @@ services:
     stdin_open: true
     command:
       - "/launch.sh"
-      - "-M"                  # do not use amcl
+#      - "-M"                  # do not use amcl
       - "-c"                  # use built cache
     stop_signal: SIGINT
 

@@ -58,7 +58,6 @@ RUN apt update && apt install -q -y --no-install-recommends \
 	sox \
 	wget \
 	sysstat \
-	xterm \
 	&& \
 	apt clean && \
 	rm -rf /var/lib/apt/lists/*
