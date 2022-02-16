@@ -63,7 +63,6 @@ function help {
     echo "-w                    build workspace only"
     echo "-i                    build image only"
     echo "-y                    no confirmation"
-    echo "-u <uid>              replace uid"
 }
 
 # check if NVIDIA GPU is available (not including Jetson's Tegra GPU), does not consider GPU model
@@ -144,7 +143,7 @@ fi
 
 function check_to_proceed {
     if [[ "$targets" =~ "cuda" ]]; then
-	REQUIRED_DRIVERV=450.80.02
+	REQUIRED_DRIVERV=470.86
 
 	DRIVERV=`nvidia-smi | grep "Driver"`
 	re=".*Driver Version: ([0-9\.]+) .*"
@@ -271,7 +270,7 @@ function build_localization_image {
 }
 
 function build_people_image {
-    local image=${prefix_pb}_focal-cuda11.1-cudnn8-devel-noetic-base
+    local image=${prefix_pb}_focal-cuda11.4.3-cudnn8-devel-noetic-base
     docker-compose build \
 		   --build-arg FROM_IMAGE=$image \
 		   --build-arg UID=$UID \

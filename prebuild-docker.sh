@@ -128,7 +128,7 @@ elif [[ "$targets" =~ "all" ]]; then
     targets="ros1 ros2 cuda l4t"
 fi
 
-CUDAV=11.1
+CUDAV=11.4.3
 CUDNNV=8
 UBUNTUV=20.04
 UBUNTU_DISTRO=focal
@@ -149,7 +149,7 @@ ROS_DISTRO=noetic
 
 function check_to_proceed {
     if [[ "$targets" =~ "cuda" ]]; then
-	REQUIRED_DRIVERV=450.80.02
+	REQUIRED_DRIVERV=470.86
 
 	DRIVERV=`nvidia-smi | grep "Driver"`
 	re=".*Driver Version: ([0-9\.]+) .*"
