@@ -22,7 +22,7 @@
 -->
 
 <launch>
-  <arg name="robot" default="cabot-f"/>
+  <arg name="robot" default="cabot2-gtm-outdoor"/>
   <arg name="use_tf_static" default="true"/>
 
   <param name="robot_description" command="rosrun xacro xacro --inorder $(find cabot_description)/robots/$(arg robot).urdf.xacro" />
