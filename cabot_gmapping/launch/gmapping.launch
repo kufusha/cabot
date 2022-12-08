@@ -14,31 +14,30 @@
       <arg name="robot" value="cabot2-gtm"/>
       <arg name="use_rviz" value="false"/>
     </include>
+    <node pkg="nodelet" type="nodelet" output="$(arg output)" name="odom_adapter_nodelet"
+	    args="load Safety/OdomAdapterNodelet cabot_nodelet_manager">
+      <param name="odom_input" value="/odom_raw"/>
+      <param name="odom_output" value="/odom"/>
+      <param name="odom_frame" value="odom"/>
+      <param name="base_frame" value="base_footprint"/>
+      <param name="offset_frame" value="base_control_shift"/>
+      <param name="publish_tf" value="true"/>
+      <param name="max_speed" value="1.2" />
+      
+      <param name="cmd_vel_input" value="/cabot/cmd_vel_limited"/>
+      <param name="cmd_vel_output" value="/cabot/cmd_vel"/>
+      
+      <param name="target_rate" value="20"/>
+    </node>
   </group>
   
   <group if="$(eval robot_name=='cabot2-gtm-outdoor')">
-    <include file="$(find cabot)/launch/cabot2-gtm-outdoor-remote.launch"/>
+    <include file="$(find cabot_gmapping)/launch/cabot2-gtm-outdoor_odom.launch"/>
     <include file="$(find cabot_description)/launch/rviz_test.launch">
       <arg name="robot" value="cabot2-gtm-outdoor"/>
       <arg name="use_rviz" value="false"/>
     </include>
   </group>
-  
-  <node pkg="nodelet" type="nodelet" output="$(arg output)" name="odom_adapter_nodelet"
-	  args="load Safety/OdomAdapterNodelet cabot_nodelet_manager">
-    <param name="odom_input" value="/odom_raw"/>
-    <param name="odom_output" value="/odom"/>
-    <param name="odom_frame" value="odom"/>
-    <param name="base_frame" value="base_footprint"/>
-    <param name="offset_frame" value="base_control_shift"/>
-    <param name="publish_tf" value="true"/>
-    <param name="max_speed" value="1.2" />
-      
-    <param name="cmd_vel_input" value="/cabot/cmd_vel_limited"/>
-    <param name="cmd_vel_output" value="/cabot/cmd_vel"/>
-      
-    <param name="target_rate" value="20"/>
-  </node>
 
   <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
     <param name="base_frame" value="$(arg base_frame)"/>
