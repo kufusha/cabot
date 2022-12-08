@@ -73,6 +73,7 @@ services:
       - ./cabot_debug:/home/developer/catkin_ws/src/cabot_debug
       - ./cabot_description:/home/developer/catkin_ws/src/cabot_description
       - ./cabot_gazebo:/home/developer/catkin_ws/src/cabot_gazebo
+      - ./cabot_gmapping:/home/developer/catkin_ws/src/cabot_gmapping
       - ./cabot_msgs:/home/developer/catkin_ws/src/cabot_msgs
       - ./cabot_navigation:/home/developer/catkin_ws/src/cabot_navigation
       - ./cabot_ui:/home/developer/catkin_ws/src/cabot_ui
