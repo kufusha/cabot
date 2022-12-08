@@ -24,6 +24,7 @@
 <launch>
   <arg name="robot" default="cabot2-gtm-outdoor"/>
   <arg name="use_tf_static" default="true"/>
+  <arg name="use_rviz" default="true"/>
 
   <param name="robot_description" command="rosrun xacro xacro --inorder $(find cabot_description)/robots/$(arg robot).urdf.xacro" />
 
@@ -34,5 +35,7 @@
   
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cabot_description)/launch/rviz_test.rviz" />
+  <group if="$(arg use_rviz)">
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find cabot_description)/launch/rviz_test.rviz" />
+  </group>  
 </launch>
