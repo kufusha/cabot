@@ -57,12 +57,13 @@ THE SOFTWARE. -->
     <param name="wheel_diameter" value="0.200" />
     <param name="count_per_round" value="90" />
     <param name="left_is_1" value="false" />
-    <param name="gain_left" value="0.7" />
-    <param name="gain_right" value="0.7" />
+    <param name="is_front_drive" value="true" />
+    <param name="gain_left" value="1.0" />
+    <param name="gain_right" value="1.0" />
     <param name="port" value="/dev/ttyODRIVE" />
     
-    <param name="vel_gain" value="6.0" />
-    <param name="vel_integrator_gain" value="15.0" />
+    <param name="vel_gain" value="2.8" />
+    <param name="vel_integrator_gain" value="0.5" />
     <param name="motor_bandwidth" value="100" />
     <param name="encoder_bandwidth" value="100" />
   </node>
