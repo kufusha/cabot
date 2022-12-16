@@ -370,7 +370,7 @@ THE SOFTWARE. -->
       <param name="wheel_diameter" value="0.200" />
       <param name="count_per_round" value="90" />
       <param name="left_is_1" value="false" />
-      <param name="is_front_drive" value="true" />
+      <param name="is_clockwise" value="false" />
       <param name="gain_left" value="1.0" />
       <param name="gain_right" value="1.0" />
       <param name="port" value="/dev/ttyODRIVE" />

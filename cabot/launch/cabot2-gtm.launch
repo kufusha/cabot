@@ -369,13 +369,14 @@ THE SOFTWARE. -->
     <node pkg="odriver" type="odriver_node.py" name="odriver_node" output="log">
       <param name="wheel_diameter" value="0.073" />
       <param name="count_per_round" value="16384" />
-      <param name="left_is_1" value="true" />
+      <param name="left_is_1" value="false" />
+      <param name="is_clockwise" value="true" />
       <param name="gain_left" value="1.0" />
       <param name="gain_right" value="1.0" />
       <param name="port" value="/dev/ttyODRIVE" />
 
-      <param name="vel_gain" value="0.2" />
-      <param name="vel_integrator_gain" value="5.0" />
+      <param name="vel_gain" value="1.0" />
+      <param name="vel_integrator_gain" value="10.0" />
       <param name="motor_bandwidth" value="200" />
       <param name="encoder_bandwidth" value="200" />
 

@@ -18,39 +18,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-DWAPlannerROS:
-# kinetic
-  max_trans_vel: 1.0
-  min_trans_vel: 0.0
-  acc_limit_trans: 0.6
+axis_linear: 1
+scale_linear: 0.4
+scale_linear_turbo: 0.6
 
-# melodic
-  max_vel_trans: 1.0
-  min_vel_trans: 0.0
-  acc_lim_trans: 0.6
+axis_angular: 3 
+scale_angular: 1.0
+scale_angular_turbo: 1.5
 
-  max_vel_x: 1.2
-  min_vel_x: 0.1
-  acc_lim_x: 0.6
-
-  min_vel_y: 0
-  max_vel_y: 0
-  
-  max_rot_vel: 1.0 # default
-  min_rot_vel: 0.0 # default
-  acc_lim_theta: 3.2 # default 3.2
-
-  xy_goal_tolerance: 0.3
-  yaw_goal_tolerance: 3.14
-  
-  path_distance_bias: 64  # 32
-  goal_distance_bias: 24  # 24
-
-  sim_time: 2.0
-  stop_time_buffer: 1.0
-  
-  vx_samples: 20
-  vy_samples: 3
-  vth_samples: 20
-
-#  forward_point_distance: 0.3
+enable_button: 4  # L1 shoulder button
+enable_turbo_button: 5  # R1 shoulder button
