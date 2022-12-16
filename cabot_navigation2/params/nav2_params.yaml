@@ -190,11 +190,11 @@ controller_server:
       prune_distance: 2.7 # default: 1.7 # should be greater than max_vel_x * sim_time + some margin
       min_vel_x: 0.0
       min_vel_y: 0.0
-      max_vel_x: 1.0
+      max_vel_x: 1.2
       max_vel_y: 0.0
       max_vel_theta: 1.0
       min_speed_xy: 0.0
-      max_speed_xy: 1.0
+      max_speed_xy: 1.2
       min_speed_theta: 0.0
     # Add high threshold velocity for turtlebot 3 issue.
     # https://github.com/ROBOTIS-GIT/turtlebot3_simulations/issues/75
@@ -262,7 +262,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         # robot_radius + safe_margin
-        inflation_radius: 0.20
+        inflation_radius: 1.00
         cost_scaling_factor: 5.0
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
@@ -314,7 +314,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         # robot_radius + safe_margin
-        inflation_radius: 0.20
+        inflation_radius: 1.00
         cost_scaling_factor: 5.0
       people_obstacle_layer:
         plugin: "cabot_navigation2::PeopleObstacleLayer"
