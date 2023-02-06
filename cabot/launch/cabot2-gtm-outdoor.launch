@@ -376,6 +376,7 @@ THE SOFTWARE. -->
       <param name="is_clockwise" value="false" />
       <param name="gain_left" value="1.0" />
       <param name="gain_right" value="1.0" />
+      <param name="fw_version" value="0.5.2"/>
       <param name="port" value="/dev/ttyODRIVE" />
 
       <param name="vel_gain" value="6.0" />
