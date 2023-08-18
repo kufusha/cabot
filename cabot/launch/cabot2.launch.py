@@ -45,9 +45,12 @@ from launch.conditions import UnlessCondition
 from launch.conditions import LaunchConfigurationEquals
 from launch.conditions import LaunchConfigurationNotEquals
 from launch.event_handlers import OnShutdown
+from launch.substitutions import AndSubstitution
 from launch.substitutions import Command
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import NotSubstitution
+from launch.substitutions import OrSubstitution
 from launch.substitutions import PathJoinSubstitution
 from launch.substitutions import PythonExpression
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -71,6 +74,10 @@ def generate_launch_description():
     touch_enabled = LaunchConfiguration('touch_enabled')
     use_standalone_wifi_scanner = LaunchConfiguration('use_standalone_wifi_scanner')
     max_speed = LaunchConfiguration('max_speed')
+    is_model_mo23 = PythonExpression(['"', model_name, '"=="cabot2-gtm-outdoor23"'])
+    use_odrive_pro = OrSubstitution(is_model_mo23, LaunchConfiguration('use_odrive_pro'))
+    odrive_left_serial_number = LaunchConfiguration('odrive_left_serial_number')
+    odrive_right_serial_number = LaunchConfiguration('odrive_right_serial_number')
 
     xacro_for_cabot_model = PathJoinSubstitution([
         get_package_share_directory('cabot_description'),
@@ -145,6 +152,21 @@ def generate_launch_description():
             'max_speed',
             default_value=EnvironmentVariable('CABOT_MAX_SPEED', default_value='1.0'),
             description='Set maximum speed of the robot'
+        ),
+        DeclareLaunchArgument(
+            'use_odrive_pro',
+            default_value='False',
+            description='If true use OdrivePro for odriver pro node'
+        ),
+        DeclareLaunchArgument(
+            'odrive_left_serial_number',
+            default_value=EnvironmentVariable('CABOT_ODRIVER_SERIAL_0', default_value=''),
+            description='Set odrive serial number (left wheel)'
+        ),
+        DeclareLaunchArgument(
+            'odrive_right_serial_number',
+            default_value=EnvironmentVariable('CABOT_ODRIVER_SERIAL_1', default_value=''),
+            description='Set odrive serial number (right wheel)'
         ),
 
         # Kind error message
@@ -441,7 +463,34 @@ def generate_launch_description():
                     ('/motorTarget', '/cabot/motorTarget'),
                     ('/motorStatus', '/cabot/motorStatus'),
                 ],
-                condition=UnlessCondition(use_sim_time),
+                condition=IfCondition(
+                    AndSubstitution(
+                        NotSubstitution(use_sim_time), NotSubstitution(use_odrive_pro)
+                    )
+                ),
+            ),
+
+            Node(
+                package='odriver',
+                executable='odriver_pro_node.py',
+                namespace='cabot',
+                name='odriver_pro_node',
+                output='log',
+                parameters=[
+                    *param_files,
+                    {
+                        'use_sim_time': use_sim_time,
+                        'odrive_left_serial_number': odrive_left_serial_number,
+                        'odrive_right_serial_number': odrive_right_serial_number
+                    }
+                ],
+                remappings=[
+                    ('/motorTarget', '/cabot/motorTarget'),
+                    ('/motorStatus', '/cabot/motorStatus'),
+                ],
+                condition=IfCondition(
+                    AndSubstitution(NotSubstitution(use_sim_time), use_odrive_pro)
+                ),
             ),
 
             # Sensor fusion for stabilizing odometry

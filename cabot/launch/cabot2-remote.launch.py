@@ -52,7 +52,11 @@ def generate_launch_description():
     gamepad = LaunchConfiguration('gamepad')
     use_keyboard = LaunchConfiguration('use_keyboard')
     is_model_ace = PythonExpression(['"', model_name, '"=="cabot2-ace"'])
+    is_model_mo23 = PythonExpression(['"', model_name, '"=="cabot2-gtm-outdoor23"'])
     use_imu = OrSubstitution(is_model_ace, LaunchConfiguration('use_imu'))
+    use_odrive_pro = OrSubstitution(is_model_mo23, LaunchConfiguration('use_odrive_pro'))
+    odrive_left_serial_number = LaunchConfiguration('odrive_left_serial_number')
+    odrive_right_serial_number = LaunchConfiguration('odrive_right_serial_number')
 
     param_files = [
         ParameterFile(PathJoinSubstitution([
@@ -96,6 +100,21 @@ def generate_launch_description():
             default_value='False',
             description='If true use IMU for rotation adjustment'
         ),
+        DeclareLaunchArgument(
+            'use_odrive_pro',
+            default_value='False',
+            description='If true use OdrivePro for odriver pro node'
+        ),
+        DeclareLaunchArgument(
+            'odrive_left_serial_number',
+            default_value=EnvironmentVariable('CABOT_ODRIVER_SERIAL_0', default_value=''),
+            description='Set odrive serial number (left wheel)'
+        ),
+        DeclareLaunchArgument(
+            'odrive_right_serial_number',
+            default_value=EnvironmentVariable('CABOT_ODRIVER_SERIAL_1', default_value=''),
+            description='Set odrive serial number (right wheel)'
+        ),
 
         # Motor Controller Adapter
         # Convert cmd_vel (linear, rotate) speed to motor target (left, right) speed.
@@ -123,6 +142,27 @@ def generate_launch_description():
                 ('/motorTarget', '/cabot/motorTarget'),
                 ('/motorStatus', '/cabot/motorStatus'),
             ],
+            condition=IfCondition(PythonExpression(['not ', use_odrive_pro])),
+        ),
+
+        Node(
+            package='odriver',
+            executable='odriver_pro_node.py',
+            namespace='cabot',
+            name='odriver_pro_node',
+            output='log',
+            parameters=[
+                *param_files,
+                {
+                    'odrive_left_serial_number': odrive_left_serial_number,
+                    'odrive_right_serial_number': odrive_right_serial_number
+                }
+            ],
+            remappings=[
+                ('/motorTarget', '/cabot/motorTarget'),
+                ('/motorStatus', '/cabot/motorStatus'),
+            ],
+            condition=IfCondition(use_odrive_pro),
         ),
 
         Node(
