@@ -48,6 +48,7 @@ CaBot v2 has been migrated to ROS2 (humble). It uses Docker containers to mainta
 - run all scripts in tools based on your requirements
   ```
   cd tools
+  ./install-service.sh               # need to install to configure system settings
   ./install-docker.sh                # if you need docker
   ./install-arm-emulator.sh          # if you build docker image for Jetson
   ./install-host-ros2.sh             # if you watch system performance or debug
@@ -129,6 +130,13 @@ CaBot v2 has been migrated to ROS2 (humble). It uses Docker containers to mainta
     # Name: Used for camera name space "<Name>" and camera TF link "<Name>_link"
     #
     # ex) "D:192.168.1.50:rs1 D:192.168.1.51:rs2"
+  ```
+- Optional settings for ./launch.sh options in service
+  ```
+  CABOT_LAUNCH_CONFIG_NAME    # "", "nuc", "rs3"
+  CABOT_LAUNCH_DO_NOT_RECORD  # 1/0
+  CABOT_LAUNCH_RECORD_CAMERA  # 1/0
+  CABOT_LAUNCH_LOG_PREFIX     # string, default=cabot
   ```
 - Optional settings
   ```
