@@ -37,6 +37,7 @@ from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition
 from launch.substitutions import EnvironmentVariable
 from launch.substitutions import LaunchConfiguration
+from launch.substitutions import NotSubstitution
 from launch.substitutions import OrSubstitution
 from launch.substitutions import PathJoinSubstitution
 from launch.substitutions import PythonExpression
@@ -142,7 +143,7 @@ def generate_launch_description():
                 ('/motorTarget', '/cabot/motorTarget'),
                 ('/motorStatus', '/cabot/motorStatus'),
             ],
-            condition=IfCondition(PythonExpression(['not ', use_odrive_pro])),
+            condition=IfCondition(NotSubstitution(use_odrive_pro)),
         ),
 
         Node(
@@ -162,7 +163,7 @@ def generate_launch_description():
                 ('/motorTarget', '/cabot/motorTarget'),
                 ('/motorStatus', '/cabot/motorStatus'),
             ],
-            condition=IfCondition(use_odrive_pro),
+        #    condition=IfCondition(use_odrive_pro),
         ),
 
         Node(
