@@ -134,7 +134,7 @@ def generate_launch_description():
         # Motor Controller (ODrive)
         Node(
             package='odriver',
-            executable='odriver_node',
+            executable='odriver_node.py',
             namespace='cabot',
             name='odriver_node',
             output='log',
@@ -163,7 +163,7 @@ def generate_launch_description():
                 ('/motorTarget', '/cabot/motorTarget'),
                 ('/motorStatus', '/cabot/motorStatus'),
             ],
-        #    condition=IfCondition(use_odrive_pro),
+            condition=IfCondition(use_odrive_pro),
         ),
 
         Node(
